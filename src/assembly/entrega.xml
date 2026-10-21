@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 https://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>entrega</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <files>
+        <file>
+            <source>${project.build.directory}/${project.build.finalName}.war</source>
+            <outputDirectory>despliegue</outputDirectory>
+        </file>
+        <file>
+            <source>README.md</source>
+            <outputDirectory>.</outputDirectory>
+        </file>
+    </files>
+    <fileSets>
+        <fileSet>
+            <directory>sql</directory>
+            <outputDirectory>sql</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/db</directory>
+            <outputDirectory>sql</outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>codigo-fuente</outputDirectory>
+            <includes>
+                <include>pom.xml</include>
+                <include>src/**</include>
+                <include>sql/**</include>
+                <include>docs/**</include>
+                <include>README.md</include>
+                <include>.gitignore</include>
+            </includes>
+            <excludes>
+                <exclude>**/*.class</exclude>
+                <exclude>**/*.log</exclude>
+                <exclude>**/.env</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
+</assembly>
