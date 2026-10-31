@@ -39,10 +39,11 @@ a { color: var(--primario); }
 }
 .marca { font-size: 1.25rem; font-weight: 700; text-decoration: none; color: var(--texto); }
 .marca span { color: var(--primario); }
-.barra nav { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
-.barra nav a { text-decoration: none; color: var(--texto); }
+.barra nav { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.barra nav a { text-decoration: none; color: var(--texto); font-size: .95rem; }
 .barra nav a:hover { color: var(--primario); }
 .usuario { color: var(--tenue); font-size: .9rem; }
+@media (max-width: 1360px) { .usuario { display: none; } }
 .en-linea { display: inline; margin: 0; }
 
 .contenido { max-width: 1120px; margin: 0 auto; padding: 24px 16px 48px; }
@@ -169,3 +170,11 @@ small.error { color: var(--peligro-texto); font-weight: 400; }
 .lista-check { margin: 0; padding-left: 20px; }
 .lista-check li { margin-bottom: 6px; }
 .dashboard h2 { margin-top: 0; }
+a.pestana { text-decoration: none; }
+a.pestana:hover { background: var(--superficie); border-color: var(--borde); }
+.insignia.gris { background: #eef2f0; color: var(--tenue); }
+textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 6px; width: 100%; }
+.estado.SOL_PENDIENTE { background: var(--aviso-fondo); color: #7a5600; }
+.estado.SOL_OBSERVADA { background: var(--peligro-fondo); color: var(--peligro-texto); }
+.estado.SOL_ACEPTADA { background: var(--exito-fondo); color: var(--exito-texto); }
+.acciones-reporte { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }

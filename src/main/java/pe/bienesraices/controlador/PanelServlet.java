@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import pe.bienesraices.modelo.CriterioBusqueda;
 import pe.bienesraices.modelo.ModuloSistema;
 import pe.bienesraices.modelo.UsuarioSesion;
 import pe.bienesraices.seguridad.Permisos;
@@ -20,9 +21,15 @@ public class PanelServlet extends BaseServlet {
         UsuarioSesion u = usuario(req);
         List<ModuloSistema> modulos = Permisos.modulos();
         long conAcceso = modulos.stream().filter(m -> m.permitidoPara(u.getRol())).count();
+        long disponibles = modulos.stream().filter(ModuloSistema::activo).count();
         req.setAttribute("modulos", modulos);
         req.setAttribute("modulosConAcceso", conAcceso);
+        req.setAttribute("modulosDisponibles", disponibles);
         req.setAttribute("minutosSesion", req.getSession().getMaxInactiveInterval() / 60);
+        CriterioBusqueda todos = new CriterioBusqueda();
+        todos.setSoloDisponibles(false);
+        req.setAttribute("totalCartera", servicios().inmuebles().buscar(todos).size());
+        req.setAttribute("totalDisponibles", servicios().inmuebles().buscar(new CriterioBusqueda()).size());
         vista("panel", req, res);
     }
 }

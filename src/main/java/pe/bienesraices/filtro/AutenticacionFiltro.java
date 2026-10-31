@@ -27,7 +27,7 @@ public class AutenticacionFiltro extends HttpFilter {
         String ruta = req.getServletPath();
         if (!Permisos.puedeAcceder(usuario.getRol(), ruta)) {
             Auditoria.registrar("ACCESO_DENEGADO", Auditoria.limpiar(ruta));
-            res.sendError(HttpServletResponse.SC_FORBIDDEN, "No tiene permisos para esta opcion");
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "No tiene permisos para esta opción");
             return;
         }
         chain.doFilter(req, res);

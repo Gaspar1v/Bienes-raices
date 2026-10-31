@@ -26,7 +26,7 @@ public class LoginServlet extends BaseServlet {
         String username = StringUtils.trimToEmpty(req.getParameter("username"));
         String password = StringUtils.defaultString(req.getParameter("password"));
         if (username.isEmpty() || password.isEmpty() || username.length() > 50) {
-            req.setAttribute("error", "Ingrese su usuario y contrasena.");
+            req.setAttribute("error", "Ingrese su usuario y contraseña.");
             vista("login", req, res);
             return;
         }
@@ -47,7 +47,7 @@ public class LoginServlet extends BaseServlet {
                 vista("login", req, res);
             }
             default -> {
-                req.setAttribute("error", "Usuario o contrasena incorrectos.");
+                req.setAttribute("error", "Usuario o contraseña incorrectos.");
                 req.setAttribute("username", Auditoria.limpiar(username));
                 vista("login", req, res);
             }

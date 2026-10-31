@@ -1,1 +1,1 @@
-<%@ page contentType="text/html;charset=UTF-8" %><% response.sendRedirect(request.getContextPath() + "/app/panel"); %>
+<%@ page contentType="text/html;charset=UTF-8" %><% response.sendRedirect(request.getContextPath() + "/inicio"); %>

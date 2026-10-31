@@ -9,6 +9,11 @@
     <request-character-encoding>UTF-8</request-character-encoding>
     <response-character-encoding>UTF-8</response-character-encoding>
 
+    <context-param>
+        <param-name>jakarta.servlet.jsp.jstl.fmt.locale</param-name>
+        <param-value>es-PE</param-value>
+    </context-param>
+
     <filter>
         <filter-name>cabeceras</filter-name>
         <filter-class>pe.bienesraices.filtro.CabecerasSeguridadFiltro</filter-class>
@@ -36,6 +41,9 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>csrf</filter-name>
+        <url-pattern>/inicio</url-pattern>
+        <url-pattern>/pedido</url-pattern>
+        <url-pattern>/captacion</url-pattern>
         <url-pattern>/login</url-pattern>
         <url-pattern>/logout</url-pattern>
         <url-pattern>/app/*</url-pattern>
@@ -49,7 +57,6 @@
         <session-timeout>30</session-timeout>
         <cookie-config>
             <http-only>true</http-only>
-
             <secure>false</secure>
             <attribute>
                 <attribute-name>SameSite</attribute-name>

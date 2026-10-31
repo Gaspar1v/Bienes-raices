@@ -22,8 +22,8 @@ public class CsrfFiltro extends HttpFilter {
             throws IOException, ServletException {
         if ("POST".equalsIgnoreCase(req.getMethod())
                 && !CsrfUtil.esValido(req.getSession(false), req.getParameter(CsrfUtil.PARAMETRO))) {
-            LOG.warn("Peticion POST rechazada por token CSRF invalido en {}", Auditoria.limpiar(req.getRequestURI()));
-            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Solicitud no valida");
+            LOG.warn("Petición POST rechazada por token CSRF inválido en {}", Auditoria.limpiar(req.getRequestURI()));
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Solicitud no válida");
             return;
         }
         req.setAttribute("csrf", CsrfUtil.token(req.getSession(true)));

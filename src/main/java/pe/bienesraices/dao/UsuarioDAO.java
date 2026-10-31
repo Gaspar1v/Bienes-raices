@@ -13,4 +13,5 @@ public interface UsuarioDAO {
     void reiniciarIntentos(int idUsuario);
 
     int insertar(Usuario usuario);
+
 }

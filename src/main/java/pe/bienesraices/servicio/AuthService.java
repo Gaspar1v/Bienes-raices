@@ -58,7 +58,7 @@ public class AuthService {
                     Auditoria.registrar("CUENTA_BLOQUEADA", username);
                     return new Resultado(Estado.CUENTA_BLOQUEADA, null);
                 }
-                Auditoria.registrar("LOGIN_FALLIDO", "contrasena incorrecta para " + username + " intento " + intentos);
+                Auditoria.registrar("LOGIN_FALLIDO", "contraseña incorrecta para " + username + " intento " + intentos);
                 return new Resultado(Estado.CREDENCIALES_INVALIDAS, null);
             }
             usuarioDAO.reiniciarIntentos(u.getIdUsuario());

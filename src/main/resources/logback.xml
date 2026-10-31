@@ -50,6 +50,9 @@
 
     <logger name="pe.bienesraices" level="DEBUG" />
 
+    <logger name="org.apache.poi" level="WARN" />
+    <logger name="org.apache.pdfbox" level="WARN" />
+    <logger name="org.apache.fontbox" level="ERROR" />
     <logger name="com.mysql" level="WARN" />
 
     <root level="INFO">

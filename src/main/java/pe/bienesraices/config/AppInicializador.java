@@ -17,7 +17,6 @@ public class AppInicializador implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent evento) {
         Conexion conexion = Conexion.get();
-
         LOG.info("Iniciando Portal Bienes Raices con base de datos {}", conexion.getUrl().split(";")[0]);
         if (Configuracion.get().activado("db.inicializar")) {
             try (Connection cn = conexion.obtener()) {

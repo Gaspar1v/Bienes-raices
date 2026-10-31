@@ -41,17 +41,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 if (!rs.next()) {
                     return Optional.empty();
                 }
-                Usuario u = new Usuario();
-                u.setIdUsuario(rs.getInt("id_usuario"));
-                u.setUsername(rs.getString("username"));
-                u.setPasswordHash(rs.getString("password_hash"));
-                u.setNombres(rs.getString("nombres"));
-                u.setRol(Rol.valueOf(rs.getString("rol")));
-                u.setActivo(rs.getBoolean("activo"));
-                u.setIntentosFallidos(rs.getInt("intentos_fallidos"));
-                Timestamp bloqueo = rs.getTimestamp("bloqueado_hasta");
-                u.setBloqueadoHasta(bloqueo == null ? null : bloqueo.toLocalDateTime());
-                return Optional.of(u);
+                return Optional.of(mapear(rs));
             }
         } catch (SQLException e) {
             throw new DAOException("Error al buscar el usuario", e);
@@ -99,5 +89,19 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } catch (SQLException e) {
             throw new DAOException("Error al registrar el usuario", e);
         }
+    }
+
+    private static Usuario mapear(ResultSet rs) throws SQLException {
+        Usuario u = new Usuario();
+        u.setIdUsuario(rs.getInt("id_usuario"));
+        u.setUsername(rs.getString("username"));
+        u.setPasswordHash(rs.getString("password_hash"));
+        u.setNombres(rs.getString("nombres"));
+        u.setRol(Rol.valueOf(rs.getString("rol")));
+        u.setActivo(rs.getBoolean("activo"));
+        u.setIntentosFallidos(rs.getInt("intentos_fallidos"));
+        Timestamp bloqueo = rs.getTimestamp("bloqueado_hasta");
+        u.setBloqueadoHasta(bloqueo == null ? null : bloqueo.toLocalDateTime());
+        return u;
     }
 }

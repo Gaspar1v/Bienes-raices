@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,16 +11,28 @@
 </head>
 <body>
 <header class="barra">
-    <a class="marca" href="${pageContext.request.contextPath}/app/panel">Bienes Raíces <span>S.A.C.</span></a>
-    <c:if test="${not empty sessionScope.usuario}">
-        <nav>
-            <span class="usuario"><c:out value="${sessionScope.usuario.nombres}"/> · <c:out value="${sessionScope.usuario.rol.etiqueta}"/></span>
-            <form method="post" action="${pageContext.request.contextPath}/logout" class="en-linea">
-                <input type="hidden" name="_csrf" value="${csrf}">
-                <button type="submit" class="boton-borde">Cerrar sesión</button>
-            </form>
-        </nav>
-    </c:if>
+    <a class="marca" href="${pageContext.request.contextPath}/">Bienes Raíces <span>S.A.C.</span></a>
+    <nav>
+        <c:choose>
+            <c:when test="${empty sessionScope.usuario}">
+                <a href="${pageContext.request.contextPath}/inicio">Buscar inmuebles</a>
+                <a href="${pageContext.request.contextPath}/pedido">Registrar pedido</a>
+                <a href="${pageContext.request.contextPath}/captacion">Ofrecer mi inmueble</a>
+                <a class="boton-borde" href="${pageContext.request.contextPath}/login">Ingreso personal</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${pageContext.request.contextPath}/app/panel">Panel</a>
+                <c:forEach var="m" items="${menu}">
+                    <a href="${pageContext.request.contextPath}${m.ruta}"><c:out value="${m.nombre}"/></a>
+                </c:forEach>
+                <span class="usuario"><c:out value="${sessionScope.usuario.nombres}"/> · <c:out value="${sessionScope.usuario.rol.etiqueta}"/></span>
+                <form method="post" action="${pageContext.request.contextPath}/logout" class="en-linea">
+                    <input type="hidden" name="_csrf" value="${csrf}">
+                    <button type="submit" class="boton-borde">Cerrar sesión</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
+    </nav>
 </header>
 <main class="contenido">
 <c:if test="${not empty sessionScope.flash}">
