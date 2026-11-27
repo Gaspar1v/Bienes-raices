@@ -52,7 +52,13 @@ En **Búsqueda y pedidos** el personal ve los pedidos registrados desde el porta
 ## Contratos y reportes
 
 - Elija el rango de fechas y descargue el reporte de **ventas y alquileres** o la **cartera de inmuebles** en Excel o en PDF.
+- Los reportes de **clientes** y **empleados** se descargan en PDF.
 - **Paquete .zip (todos)** descarga todos los reportes juntos.
+
+## Usuarios y agentes
+
+- El gerente y el administrador ven el desempeño de cada agente (operaciones, ventas, alquileres y comisión).
+- Solo el administrador crea usuarios, cambia su rol, los activa o desactiva y restablece contraseñas (mínimo 8 caracteres con letras y números).
 
 ## Cerrar sesión
 

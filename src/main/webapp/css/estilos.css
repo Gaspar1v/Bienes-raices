@@ -177,4 +177,5 @@ textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); bor
 .estado.SOL_PENDIENTE { background: var(--aviso-fondo); color: #7a5600; }
 .estado.SOL_OBSERVADA { background: var(--peligro-fondo); color: var(--peligro-texto); }
 .estado.SOL_ACEPTADA { background: var(--exito-fondo); color: var(--exito-texto); }
+.estado.INACTIVO { background: var(--peligro-fondo); color: var(--peligro-texto); }
 .acciones-reporte { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }

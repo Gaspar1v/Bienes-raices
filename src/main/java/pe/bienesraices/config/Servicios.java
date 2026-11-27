@@ -16,6 +16,7 @@ import pe.bienesraices.servicio.OperacionService;
 import pe.bienesraices.servicio.PedidoService;
 import pe.bienesraices.servicio.ReporteExcelService;
 import pe.bienesraices.servicio.ReportePdfService;
+import pe.bienesraices.servicio.UsuarioService;
 
 public final class Servicios {
     private static final String ATRIBUTO = Servicios.class.getName();
@@ -27,6 +28,7 @@ public final class Servicios {
     private final ReporteExcelService reportes;
     private final CaptacionService captacion;
     private final ReportePdfService reportesPdf;
+    private final UsuarioService usuarios;
 
     public Servicios(FabricaConexion conexiones) {
         this.auth = new AuthService(new UsuarioDAOImpl(conexiones), Clock.systemDefaultZone());
@@ -36,6 +38,7 @@ public final class Servicios {
         this.reportes = new ReporteExcelService();
         this.captacion = new CaptacionService(new SolicitudCaptacionDAOImpl(conexiones));
         this.reportesPdf = new ReportePdfService();
+        this.usuarios = new UsuarioService(new UsuarioDAOImpl(conexiones));
     }
 
     public void registrarEn(ServletContext contexto) {
@@ -53,4 +56,5 @@ public final class Servicios {
     public ReporteExcelService reportes() { return reportes; }
     public CaptacionService captacion() { return captacion; }
     public ReportePdfService reportesPdf() { return reportesPdf; }
+    public UsuarioService usuarios() { return usuarios; }
 }

@@ -28,11 +28,12 @@ public final class Permisos {
             modulo("reportes", "Contratos y reportes", "Reportes de ventas, alquileres, comisiones, clientes y empleados en Excel y PDF.",
                     "RF008", "/app/reportes", true, GERENTE, ADMINISTRADOR),
             modulo("usuarios", "Usuarios y agentes", "Gestión de usuarios, roles y permisos; desempeño de los agentes inmobiliarios.",
-                    "RF001, RF010", "/app/usuarios", false, GERENTE, ADMINISTRADOR));
+                    "RF001, RF010", "/app/usuarios", true, GERENTE, ADMINISTRADOR));
 
     private static final ImmutableSetMultimap<String, Rol> RUTAS = construirRutas();
 
     private static final ImmutableSet<Rol> EDITAN_INMUEBLES = Sets.immutableEnumSet(ASISTENTE, ADMINISTRADOR);
+    private static final ImmutableSet<Rol> ADMINISTRAN_USUARIOS = Sets.immutableEnumSet(ADMINISTRADOR);
 
     private Permisos() {
     }
@@ -59,6 +60,10 @@ public final class Permisos {
 
     public static boolean puedeEditarInmuebles(Rol rol) {
         return EDITAN_INMUEBLES.contains(rol);
+    }
+
+    public static boolean puedeAdministrarUsuarios(Rol rol) {
+        return ADMINISTRAN_USUARIOS.contains(rol);
     }
 
     public static List<ModuloSistema> modulos() {

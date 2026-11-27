@@ -30,6 +30,7 @@ class PermisosTest {
         assertTrue(reportes.permitidoPara(Rol.GERENTE));
         assertFalse(reportes.permitidoPara(Rol.AGENTE));
         assertEquals(6, Permisos.modulos().size());
+        assertTrue(Permisos.modulos().stream().allMatch(ModuloSistema::activo));
     }
 
     @Test
