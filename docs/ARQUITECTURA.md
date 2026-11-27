@@ -24,6 +24,8 @@ Navegador ──► Filtros ──► Controlador (Servlet) ──► Servicio �
 
 `Servicios` crea una sola vez los servicios con sus DAO y los guarda en el `ServletContext`; cada servlet los obtiene con `servicios()` desde `BaseServlet`. Así los controladores dependen de los servicios y no de la base de datos (inversión de dependencias).
 
+Las conexiones se toman de un pool HikariCP (`PoolConexiones`) en lugar de abrir una nueva con `DriverManager` en cada petición; el máximo se configura con `BR_DB_POOL_MAX` y el pool se cierra al detener la aplicación.
+
 ## Rutas
 
 | Ruta | Servlet | Acceso |
@@ -37,6 +39,7 @@ Navegador ──► Filtros ──► Controlador (Servlet) ──► Servicio �
 | `/app/reportes` | `ReporteServlet` | Gerente y administrador |
 | `/captacion` | `CaptacionPublicaServlet` | Público (propietarios) |
 | `/app/captacion` | `CaptacionServlet` | Agente, asistente y administrador |
+| `/app/usuarios` | `UsuarioServlet` | Gerente (consulta) y administrador |
 
 Las rutas `/app/*` se habilitan desde `Permisos`: cada `ModuloSistema` indica su ruta, los roles autorizados y si está activo. Un módulo inactivo aparece en el dashboard como **Próximamente** y su ruta queda denegada.
 
@@ -70,6 +73,10 @@ Las rutas `/app/*` se habilitan desde `Permisos`: cada `ModuloSistema` indica su
 1. El propietario completa el formulario público `/captacion`; `CaptacionService.registrar` valida los datos y guarda la solicitud con estado `PENDIENTE`.
 2. El personal revisa las solicitudes en `/app/captacion` y puede **observarlas** (con un motivo) o **aceptarlas**.
 3. Al aceptar, `SolicitudCaptacionDAOImpl.aceptar` bloquea la solicitud, reutiliza o crea al propietario según su DNI, registra el inmueble en la cartera y marca la solicitud como `ACEPTADA`, todo en una transacción.
+
+## Usuarios y agentes (RF001, RF010)
+
+`UsuarioService` crea usuarios internos, cambia roles y estado y restablece contraseñas; impide que el administrador se desactive o se quite el rol a sí mismo. `resumenAgentes` calcula para cada agente sus operaciones, ventas, alquileres y comisión total.
 
 ## Seguridad
 

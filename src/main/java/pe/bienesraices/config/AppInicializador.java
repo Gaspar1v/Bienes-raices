@@ -18,6 +18,7 @@ public class AppInicializador implements ServletContextListener {
     public void contextInitialized(ServletContextEvent evento) {
         Conexion conexion = Conexion.get();
         LOG.info("Iniciando Portal Bienes Raices con base de datos {}", conexion.getUrl().split(";")[0]);
+        LOG.info("Pool de conexiones listo: maximo {} conexiones", conexion.getPool().maximo());
         if (Configuracion.get().activado("db.inicializar")) {
             try (Connection cn = conexion.obtener()) {
                 ScriptSQL.ejecutar(cn, "/db/schema.sql");
@@ -30,5 +31,11 @@ public class AppInicializador implements ServletContextListener {
         }
         new Servicios(conexion).registrarEn(evento.getServletContext());
         LOG.info("Aplicacion lista");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent evento) {
+        Conexion.get().cerrar();
+        LOG.info("Pool de conexiones cerrado");
     }
 }
