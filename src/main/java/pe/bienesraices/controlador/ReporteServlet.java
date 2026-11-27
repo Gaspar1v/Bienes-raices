@@ -3,6 +3,7 @@ package pe.bienesraices.controlador;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import pe.bienesraices.modelo.CriterioBusqueda;
 import pe.bienesraices.modelo.Inmueble;
 import pe.bienesraices.modelo.Operacion;
+import pe.bienesraices.modelo.Pedido;
+import pe.bienesraices.modelo.Usuario;
 import pe.bienesraices.servicio.ReporteExcelService;
 import pe.bienesraices.servicio.ReportePdfService;
 import pe.bienesraices.util.Auditoria;
@@ -72,6 +75,8 @@ public class ReporteServlet extends BaseServlet {
                 List<Operacion> ops = servicios().operaciones().listarPorRango(desde, hasta);
                 enviarArchivo(res, pdf.reporteOperaciones(ops, desde, hasta), PDF, "operaciones_" + desde + "_" + hasta + ".pdf");
             }
+            case "clientes_pdf" -> enviarArchivo(res, reporteClientes(pdf), PDF, "clientes.pdf");
+            case "empleados_pdf" -> enviarArchivo(res, reporteEmpleados(pdf), PDF, "empleados.pdf");
             case "paquete" -> {
                 Map<String, byte[]> archivos = new LinkedHashMap<>();
                 List<Operacion> ops = servicios().operaciones().listarPorRango(desde, hasta);
@@ -86,5 +91,29 @@ public class ReporteServlet extends BaseServlet {
             }
         }
         Auditoria.registrar("REPORTE_DESCARGADO", "tipo=" + tipo + (conRango ? " desde=" + desde + " hasta=" + hasta : ""));
+    }
+
+    private byte[] reporteClientes(ReportePdfService pdf) {
+        List<String[]> filas = new ArrayList<>();
+        LocalDate hoy = LocalDate.now();
+        for (Operacion o : servicios().operaciones().listarPorRango(hoy.minusYears(10), hoy.plusYears(10))) {
+            filas.add(new String[] {o.getClienteNombre(), o.getClienteDni(), "Operación N.° " + o.getIdOperacion(),
+                    o.getTipo().getEtiqueta(), o.getDescripcionInmueble()});
+        }
+        for (Pedido p : servicios().pedidos().listar()) {
+            filas.add(new String[] {p.getNombreContacto(), "—", "Pedido N.° " + p.getIdPedido(),
+                    p.getTipoOperacion().getEtiqueta(), p.getEmail() + " · " + p.getTelefono()});
+        }
+        return pdf.listado("Reporte de clientes", "Compradores, inquilinos y clientes con pedidos registrados",
+                new String[] {"Cliente", "DNI", "Registro", "Operación", "Detalle"}, new float[] {24, 10, 18, 12, 36}, filas);
+    }
+
+    private byte[] reporteEmpleados(ReportePdfService pdf) {
+        List<String[]> filas = new ArrayList<>();
+        for (Usuario u : servicios().usuarios().listar()) {
+            filas.add(new String[] {u.getNombres(), u.getUsername(), u.getRol().getEtiqueta(), u.isActivo() ? "Activo" : "Inactivo"});
+        }
+        return pdf.listado("Reporte de empleados", "Usuarios internos del portal y su rol",
+                new String[] {"Nombres", "Usuario", "Rol", "Estado"}, new float[] {35, 20, 30, 15}, filas);
     }
 }

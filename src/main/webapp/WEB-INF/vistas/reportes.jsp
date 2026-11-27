@@ -31,5 +31,13 @@
             <a class="boton" href="${pageContext.request.contextPath}/app/reportes?descargar=inmuebles_pdf">Descargar PDF</a>
         </div>
     </section>
+    <section class="tarjeta">
+        <h2>Clientes y empleados</h2>
+        <p class="tenue">Compradores, inquilinos y clientes con pedidos; usuarios internos con su rol.</p>
+        <div class="acciones-reporte">
+            <a class="boton" href="${pageContext.request.contextPath}/app/reportes?descargar=clientes_pdf">Clientes (PDF)</a>
+            <a class="boton" href="${pageContext.request.contextPath}/app/reportes?descargar=empleados_pdf">Empleados (PDF)</a>
+        </div>
+    </section>
 </div>
 <%@ include file="comun/pie.jspf" %>
